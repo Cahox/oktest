@@ -27,7 +27,7 @@ jobs:
     - name: Sleep for 30 seconds
       uses: jakejarvis/wait-action@v0.1.0
       with:
-        time: '30s'
+        time: '180s'
     
     - name: Verify
       uses: srt32/uptime@v0.2

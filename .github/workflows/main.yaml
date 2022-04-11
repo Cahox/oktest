@@ -1,0 +1,41 @@
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+    
+    - name: Login
+      uses: okteto/login@master
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: Activate Namespace
+      uses: okteto/namespace@master
+      with:
+        namespace: rberrelleza
+    
+    - name: Deploy Pipeline
+      uses: okteto/pipeline@master
+      with:
+        name: test-pipeline
+    
+    - name: Sleep for 30 seconds
+      uses: jakejarvis/wait-action@v0.1.0
+      with:
+        time: '30s'
+    
+    - name: Verify
+      uses: srt32/uptime@v0.2
+      with:
+        url-to-hit: "https://hello-actions-rberrelleza.cloud.okteto.net"
+        expected-statuses: "200"
+    
+    - name: Destroy Pipeline
+      uses: okteto/destroy-pipeline@master
+      with:
+        name: test-pipeline

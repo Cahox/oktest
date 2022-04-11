@@ -13,7 +13,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: frontend:latest
+      - image: cahox/frontend:latest
         name: frontend
 
 ---

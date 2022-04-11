@@ -24,7 +24,7 @@ jobs:
       with:
         name: test-pipeline
     
-    - name: Sleep for 30 seconds
+    - name: Sleep for 3 minutes
       uses: jakejarvis/wait-action@v0.1.0
       with:
         time: '180s'

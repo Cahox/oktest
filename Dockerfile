@@ -1,11 +1,13 @@
-FROM golang:alpine as builder
-RUN apk --update --no-cache add bash
-WORKDIR /app
-ADD . .
-RUN go build -o app
+FROM node:14 as dev
 
-FROM alpine as prod
-WORKDIR /app
-COPY --from=builder /app/app /app/app
-EXPOSE 8080
-CMD ["./app"]
+WORKDIR /usr/src/app
+
+COPY package.json yarn.lock ./
+RUN yarn install
+
+COPY . .
+RUN --mount=type=cache,target=./node_modules/.cache/webpack yarn build
+
+FROM nginx:alpine
+COPY --from=dev /usr/src/app/dist /usr/share/nginx/html
+EXPOSE 80

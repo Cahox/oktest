@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-actions
+  name: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-actions
+      app: frontend
   template:
     metadata:
       labels:
-        app: hello-actions
+        app: frontend
     spec:
       containers:
-      - image: ramiro/hello-actions:latest
-        name: hello-actions
+      - image: frontend:latest
+        name: frontend
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-actions
+  name: frontend
   annotations:
     dev.okteto.com/auto-ingress: "true"
 spec:
   type: ClusterIP  
   ports:
-  - name: "hello-actions"
+  - name: "frontend"
     port: 8080
   selector:
-    app: hello-actions
+    app: frontend

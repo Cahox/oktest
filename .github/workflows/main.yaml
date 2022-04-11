@@ -17,12 +17,12 @@ jobs:
     - name: Activate Namespace
       uses: okteto/namespace@master
       with:
-        namespace: cahox
+        namespace: rberrelleza
     
     - name: Deploy Pipeline
       uses: okteto/pipeline@master
       with:
-        name: contract-service
+        name: test-pipeline
     
     - name: Sleep for 30 seconds
       uses: jakejarvis/wait-action@v0.1.0
@@ -32,10 +32,10 @@ jobs:
     - name: Verify
       uses: srt32/uptime@v0.2
       with:
-        url-to-hit: "https://contract-service-cahox.cloud.okteto.net"
+        url-to-hit: "https://hello-actions-cahox.cloud.okteto.net"
         expected-statuses: "200"
     
     - name: Destroy Pipeline
       uses: okteto/destroy-pipeline@master
       with:
-        name: contract-service
+        name: test-pipeline
